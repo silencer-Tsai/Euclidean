@@ -10,7 +10,7 @@ var (
 // calculate greatest common divisor of x and y
 // using euclidean algorithm
 // return GCD of x and y and the quotients during calculating
-func gcd(x, y int64, trace []int64) (int64, []int64, error) {
+func GCD(x, y int64, trace []int64) (int64, []int64, error) {
 	if x == 0 || y == 0 {
 		return 0, nil, ErrInvalidNum
 	}
@@ -21,12 +21,12 @@ func gcd(x, y int64, trace []int64) (int64, []int64, error) {
 	if r == 0 {
 		return y, trace, nil
 	} else {
-		return gcd(y, r, trace)
+		return GCD(y, r, trace)
 	}
 }
 
 // calculate the integer tuple (a, b) satisfying a*x + b*y = gcd(x, y)
-func bezout(trace []int64) (int64, int64, error) {
+func Bezout(trace []int64) (int64, int64, error) {
 	l := len(trace)
 	if l == 0 {
 		return 0, 0, ErrInvalidTrace

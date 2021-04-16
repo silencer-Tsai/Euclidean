@@ -21,7 +21,7 @@ func TestGCD(t *testing.T) {
 		t.Log("--------------------------------")
 		t.Logf("x: %d, y: %d\n", test.x, test.y)
 		trace := make([]int64, 0)
-		result, trace, err := gcd(test.x, test.y, trace)
+		result, trace, err := GCD(test.x, test.y, trace)
 		if err != nil {
 			if err != test.err {
 				t.Errorf("different error, want: %s, get: %s", test.err, err)
@@ -37,7 +37,7 @@ func TestGCD(t *testing.T) {
 		t.Log("trace: ", trace)
 
 		// bezout
-		a, b, _ := bezout(trace)
+		a, b, _ := Bezout(trace)
 		t.Log(a)
 		t.Log(b)
 		r := a*test.x + b*test.y
