@@ -7,10 +7,24 @@ var (
 	ErrInvalidTrace = fmt.Errorf("invalid trace")
 )
 
+// return the greatest common divisor of x and y
+// return error if x == 0 or y == 0
+func GCD(x, y int64) (int64, error) {
+	if x == 0 || y == 0 {
+		return 0, ErrInvalidNum
+	}
+	r := x % y
+	if r == 0 {
+		return y, nil
+	} else {
+		return GCD(y, r)
+	}
+}
+
 // calculate greatest common divisor of x and y
 // using euclidean algorithm
 // return GCD of x and y and the quotients during calculating
-func GCD(x, y int64, trace []int64) (int64, []int64, error) {
+func GCDWithTrace(x, y int64, trace []int64) (int64, []int64, error) {
 	if x == 0 || y == 0 {
 		return 0, nil, ErrInvalidNum
 	}
@@ -21,12 +35,18 @@ func GCD(x, y int64, trace []int64) (int64, []int64, error) {
 	if r == 0 {
 		return y, trace, nil
 	} else {
-		return GCD(y, r, trace)
+		return GCDWithTrace(y, r, trace)
 	}
 }
 
 // calculate the integer tuple (a, b) satisfying a*x + b*y = gcd(x, y)
-func Bezout(trace []int64) (int64, int64, error) {
+func Bezout(x, y int64) (int64, int64, error) {
+	trace := make([]int64, 0)
+	_, trace, err := GCDWithTrace(x, y, trace)
+	if err != nil {
+		return 0, 0, err
+	}
+
 	l := len(trace)
 	if l == 0 {
 		return 0, 0, ErrInvalidTrace
